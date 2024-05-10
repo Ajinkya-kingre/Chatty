@@ -1,17 +1,25 @@
 const express = require("express");
+const connectionDB = require("./db/db");
 
+// user Model
+const userModel = require("./model/user");
+
+//mongoDB connection
+connectionDB();
+
+// app use
 const app = express();
-const PORT = process.env.PORT || 8000;
 
 app.use(express.json());
-
 app.use(express.urlencoded({ extended: false }));
 
+app.get("/", (req, res) => {
+  res.send("welcome");
+});
 
-app.get('/', (req, res)=>{
-    res.send("welcome")
-})
 
-app.listen(PORT, ()=>{
-    console.log(`Server is running on Port ${PORT}`)
-})
+// localhost 
+const PORT = process.env.PORT || 8000;
+app.listen(PORT, () => {
+  console.log(`Server is running on Port ${PORT}`);
+});
