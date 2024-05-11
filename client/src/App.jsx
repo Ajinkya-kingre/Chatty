@@ -20,13 +20,11 @@ const router = createBrowserRouter([
 
 function App() {
   return (
-    <>
-      <RouterProvider router={router}>
-        <div className="App">
-          <Routes />
-        </div>
-      </RouterProvider>
-    </>
+    <RouterProvider router={router}>
+      <div className="App">
+        <Routes />
+      </div>
+    </RouterProvider>
   );
 }
 
