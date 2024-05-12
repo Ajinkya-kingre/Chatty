@@ -1,7 +1,7 @@
 const express = require("express");
 const connectionDB = require("./db/db");
 const routes = require("./routes/auth/authRoute")
-
+require('dotenv').config()
 
 
 // user Model
