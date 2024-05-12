@@ -1,15 +1,51 @@
-const express = require("express");
-const router = express.Router();
-const userModel = require("../../model/user");
+
+const userModel = require("../model/user");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+
+
+
+//register
+const register = async (req, res) => {
+  try {
+    const { username, email, password } = req.body;
+
+    if (!username || !email || !password) {
+      res.status(400).send("Please fill all the required fields");
+    } else {
+      const isEmailExist = await userModel.findOne({ email });
+      if (isEmailExist) {
+        return res.status(400).json({ message: "Email already exists" });
+      } else {
+        //hash the password
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        const newUser = new userModel({
+          username,
+          email,
+          password: hashedPassword,
+        });
+
+        await newUser.save();
+
+        res
+          .status(200)
+          .send({ message: "User created successfully!!!", user: newUser });
+      }
+    }
+  } catch (error) {
+    res.status(500).json({ message: "server Error" });
+  }
+};
+
+
 
 
 
 
 
 //Login
-router.post("/login", async (req, res) => {
+ const login = async (req, res) => {
     try {
       const { email, password } = req.body;
       if (!email || !password) {
@@ -63,8 +99,22 @@ router.post("/login", async (req, res) => {
       console.error("Login error:", error);
       res.status(500).json({ message: "Server error" });
     }
-  });
+  };
 
-  module.exports = router;
-
+  // logout
+  const logout = async (req, res) => {
+    try {
+      // Clear user token from database (assuming user is authenticated)
+      await userModel.updateOne({ _id: req.user.userId }, { $unset: { usertoken: 1 } });
+      
+      // Clear client-side token (optional)
+      // For example, clear token from cookies or local storage
   
+      res.status(200).json({ message: "Logout successful" });
+    } catch (error) {
+      console.error("Logout error:", error);
+      res.status(500).json({ message: "Server error" });
+    }
+  };
+
+  module.exports = {register, login, logout}
