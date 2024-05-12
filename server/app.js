@@ -2,12 +2,6 @@ const express = require("express");
 const connectionDB = require("./db/db");
 const registrationRoutes = require('./routes/auth/registration');
 const loginRoutes = require('./routes/auth/login');
-const cors = require("cors"); 
-
-
-
-
-
 
 
 // user Model
@@ -41,13 +35,21 @@ app.get("/", (req, res) => {
   res.send("welcome");
 });
 
-// Use the registration routes
-app.use('/api/routes/auth', registrationRoutes);
+//auth routes
+app.use("/api/auth", routes);
 
-// Use the login routes
-app.use('/api/routes/auth', loginRoutes);
+//
+// route/router.js
 
+const { authenticate } = require("./middleware/authUserMiddle");
 
+app.route("/protected-route").get(authenticate, (req, res) => {
+  // Only authenticated users can access this route
+  res.json({
+    message: "Protected route accessed successfully",
+    user: req.user,
+  });
+});
 
 // localhost
 const PORT = process.env.PORT || 8000;
