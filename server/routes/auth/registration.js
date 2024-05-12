@@ -10,6 +10,7 @@ router.post("/register", async (req, res) => {
     const { username, email, password } = req.body;
 
     if (!username || !email || !password) {
+      console.log("Please fill all the required fields")
       res.status(400).send("Please fill all the required fields");
     } else {
       const isEmailExist = await userModel.findOne({ email });

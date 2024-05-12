@@ -1,10 +1,12 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const navigate = useNavigate();
+
   const [user, setUser] = useState({
-    username: "",
+    email: "",
     password: "",
   });
 
@@ -13,19 +15,30 @@ const Login = () => {
     e.preventDefault();
     // console.log("Username", username);
     // console.log("Password", password);.
-    // try {
-    //   const response = await axios.post("", {
-    //     username,
-    //     password,
-    //   });
-    //   if (response.status == 200) {
-    //     console.log("Login successful:", response.data);
-    //   } else {
-    //     console.log("Login failed:", response.data);
-    //   }
-    // } catch (error) {
-    //   console.error("Login failed:", error);
-    // }
+    try {
+      const response = await axios.post(
+        `http://localhost:8000/api/routes/auth/login`,
+        {
+          email: user.email,
+          password: user.password,
+        }
+      );
+
+      console.log("request from server", response.data);
+
+      if (response.status >= 200 && response.status < 300) {
+        console.log("Login successful:", response.data);
+        // Save the user to local storage
+        // localStorage.setItem("user", JSON.stringify(response.data));
+
+        // Redirect to the chat page
+        navigate("/");
+      } else {
+        console.log("User not found", response.data);
+      }
+    } catch (error) {
+      console.error("Login failed:", error);
+    }
   };
 
   return (
@@ -55,15 +68,16 @@ const Login = () => {
             className="flex w-full flex-col space-y-6"
           >
             <label htmlFor="username" className="text-gray-400 ">
-              Username:
+              email:
             </label>
             <input
               className="w-full px-16 pl-4 py-2 rounded-md bg-transparent border border-white focus:outline-none focus:border-2 focus:border-purple-800"
               type="text"
+              name="email"
               placeholder="Username"
-              id="username"
-              value={user.username}
-              onChange={(e) => setUser({ ...user, username: e.target.value })}
+              id="email"
+              value={user.email}
+              onChange={(e) => setUser({ ...user, email: e.target.value })}
               required
             />
             <label htmlFor="password" className="text-gray-400">

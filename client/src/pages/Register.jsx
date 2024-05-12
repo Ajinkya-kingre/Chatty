@@ -1,8 +1,10 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const Register = () => {
+  const navigate = useNavigate();
+
   const [user, setUser] = useState({
     username: "",
     email: "",
@@ -12,27 +14,31 @@ const Register = () => {
   const handleSubmit = async (e) => {
     console.log(user);
     e.preventDefault();
-    // console.log("Username:", username);
-    // console.log("Email:", email);
-    // console.log("Password:", password);
-    // try {
-    //   const response = await axios.post("", {
-    //     username,
-    //     email,
-    //     password,
-    //   });
-    //   if (response.status === 200) {
-    //     console.log("Registration successful:", response.data);
-    //     alert("Registration successful!");
-    //     // redirect the user or show a success message
-    //   } else {
-    //     console.log("Registration failed:", response.statusText);
-    //     alert("Registration failed: ");
-    //     // Handle registration failure d
-    //   }
-    // } catch (error) {
-    //   console.error("Registration failed:", error);
-    // }
+
+    try {
+      const response = await axios.post(
+        `http://localhost:8000/api/routes/auth/register`,
+        {
+          username: user.username,
+          email: user.email,
+          password: user.password,
+        }
+      );
+      console.log("request from server", response.data);
+
+      if (response.status >= 200 && response.status < 300) {
+        console.log("Register successful:", response.data);
+        // Save the user to local storage
+        // localStorage.setItem("user", JSON.stringify(response.data));
+
+        // Redirect to the chat page
+        navigate("/login");
+      } else {
+        console.log("there is error during registration", response.data);
+      }
+    } catch (error) {
+      console.error("Login failed:", error);
+    }
   };
 
   return (
