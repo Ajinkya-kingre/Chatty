@@ -86,7 +86,7 @@ const Login = () => {
             </button>
             <p className="text-center text-gray-400">
               New to ChatApp?{" "}
-              <Link className="text-blue-500 underline" to="/register">
+              <Link className="text-blue-500 underline" to="/">
                 Register
               </Link>
             </p>
