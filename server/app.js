@@ -1,7 +1,14 @@
 const express = require("express");
 const connectionDB = require("./db/db");
-const registrationRoutes = require('./routes/auth/registration');
-const loginRoutes = require('./routes/auth/login');
+
+const cors = require("cors"); 
+
+
+
+
+const routes = require("./routes/auth/authRoute")
+require('dotenv').config()
+
 
 
 // user Model

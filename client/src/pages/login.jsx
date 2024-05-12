@@ -17,7 +17,7 @@ const Login = () => {
     // console.log("Password", password);.
     try {
       const response = await axios.post(
-        `http://localhost:8000/api/routes/auth/login`,
+        `http://localhost:8000/api/auth/login`,
         {
           email: user.email,
           password: user.password,
@@ -100,7 +100,7 @@ const Login = () => {
             </button>
             <p className="text-center text-gray-400">
               New to ChatApp?{" "}
-              <Link className="text-blue-500 underline" to="/">
+              <Link className="text-blue-500 underline" to="/register">
                 Register
               </Link>
             </p>
