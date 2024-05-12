@@ -1,8 +1,14 @@
 const express = require("express");
 const connectionDB = require("./db/db");
+<<<<<<< HEAD
 const routes = require("./routes/auth/authRoute");
 require("dotenv").config();
  // remove this after you've confirmed it is working
+=======
+const routes = require("./routes/auth/authRoute")
+require('dotenv').config()
+
+>>>>>>> 6c1cec0f6466fec90faaf2f2113e653357c376d0
 
 // user Model
 const userModel = require("./model/user");
