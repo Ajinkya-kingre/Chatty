@@ -7,15 +7,15 @@ export default {
   theme: {
     extend: {
       colors: {
-        background:"#010104",// background color
-        primary: "#BB00FF", 
+        background:"#343434",// background color
+        primary: "#0000FF", 
         paragraph: "#EBE9FC",// paragraph color
         button: "#7f5af0",// button color
         "button-text": "#fffffe",// button-text color
         stroke: "#010101",// stroke color
         main: "#fffffe",// main color
         highlight: "#8000F0",// highlight color
-        secondary: "#020024",// secondary light gray color
+        secondary: "#000000",// secondary light gray color
        
     },
   },

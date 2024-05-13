@@ -2,6 +2,7 @@ import React from "react";
 import UserSide from "../components/UserSide";
 import MsgContainer from "../components/MsgContainer";
 import SidebarLeft from "../components/sidebarLeft";
+import Header from "../components/Header";
 
 const Home = () => {
   return (
@@ -9,7 +10,7 @@ const Home = () => {
       <SidebarLeft />
 
       <UserSide />
-
+      <Header />
       <MsgContainer />
     </div>
   );
