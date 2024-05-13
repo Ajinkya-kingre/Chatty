@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -27,13 +28,18 @@ const Register = () => {
       console.log("request from server", response.data);
 
       if (response.status >= 200 && response.status < 300) {
+        const token = response.data.token;
+
+        toast.success("Registration successful");
         console.log("Register successful:", response.data);
+
         // Save the user to local storage
-        // localStorage.setItem("user", JSON.stringify(response.data));
+        localStorage.setItem("token", token);
 
         // Redirect to the chat page
         navigate("/login");
       } else {
+        toast.success("Registration failed");
         console.log("there is error during registration", response.data);
       }
     } catch (error) {

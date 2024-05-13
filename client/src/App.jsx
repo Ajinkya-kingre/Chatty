@@ -7,6 +7,7 @@ import {
 import Login from "./pages/login";
 import Register from "./pages/Register";
 import Chat from "./pages/Home";
+import ErrorPage from "./pages/ErrorPage";
 
 const router = createBrowserRouter([
   {
@@ -20,6 +21,10 @@ const router = createBrowserRouter([
   {
     path: "/register",
     element: <Register />,
+  },
+  {
+    path: "/*",
+    element: <ErrorPage />,
   },
 ]);
 

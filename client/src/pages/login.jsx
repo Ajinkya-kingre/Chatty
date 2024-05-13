@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -27,13 +28,16 @@ const Login = () => {
       console.log("request from server", response.data);
 
       if (response.status >= 200 && response.status < 300) {
+        const token = response.data.token;
+
+        toast.success("Login successful");
         console.log("Login successful:", response.data);
         // Save the user to local storage
-        // localStorage.setItem("user", JSON.stringify(response.data));
-
+        localStorage.setItem("token", token);
         // Redirect to the chat page
         navigate("/");
       } else {
+        toast.success("Login failed");
         console.log("User not found", response.data);
       }
     } catch (error) {

@@ -26,6 +26,7 @@ const sendMessage = async (req, res) => {
     if (newMessage) {
       gotConversation.messages.push(newMessage._id);
     }
+    // await gotConversation.save()
   } catch (error) {
     res.status(400).send({ error: error });
   }
