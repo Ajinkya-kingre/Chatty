@@ -1,5 +1,6 @@
 const Conversation = require("../model/conversation");
 const Message = require("../model/message");
+const {getReceiverSocketId, io} = require("../socket/socket")
 
 const sendMessage = async (req, res) => {
   try {
@@ -26,14 +27,25 @@ const sendMessage = async (req, res) => {
     if (newMessage) {
       gotConversation.messages.push(newMessage._id);
     }
+
+    await Promise.all([gotConversation.save(), newMessage.save()]);
+
+    // socket.io
+    const recieverSocketId = getReceiverSocketId(recieverId);
+    if(recieverSocketId){
+      io.to(recieverSocketId).emit("newMessage", newMessage);
+    }
+    return res.status(201).json({
+      newMessage
+    })
   } catch (error) {
     res.status(400).send({ error: error });
+    console.log(error)
   }
 };
 
 
-
-const gotMessage = async (req,res) => {
+const getMessage = async (req,res) => {
     try {
         const senderId = req.id;
         const recieverId = req.params.id;
@@ -47,3 +59,7 @@ const gotMessage = async (req,res) => {
         res.status(400).send({error : error})
     }
 }
+
+
+
+module.exports = {sendMessage, getMessage}

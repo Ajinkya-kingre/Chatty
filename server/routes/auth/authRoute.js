@@ -9,6 +9,9 @@ const validate = require("../../middleware/authMiddle.js")
 
 router.route("/register").post(validate(registrationSchema),register)
 router.route("/login").post(validate(loginSchema),login)
+router.route("/", (req, res)=>{
+    res.send("welcome")
+});
 
 
 

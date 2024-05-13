@@ -1,8 +1,9 @@
 const express = require("express");
 const connectionDB = require("./db/db");
-const routes = require("./routes/auth/authRoute")
-require('dotenv').config()
-
+const routes = require("./routes/auth/authRoute");
+const cors = require("cors");
+const cookieParser = require("cookie-parser");
+require("dotenv").config();
 
 // user Model
 const userModel = require("./model/user");
@@ -12,29 +13,22 @@ connectionDB();
 
 // app use
 const app = express();
-
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
 
-app.get("/", (req, res) => {
-  res.send("welcome");
-});
+const corsOperation = {
+  origin: "http://localhost:8000",
+  credential: true,
+};
+app.use(cors(corsOperation));
 
 //auth routes
 app.use("/api/auth", routes);
 
-//
-// route/router.js
-
-const { authenticate } = require("./middleware/authUserMiddle");
-
-app.route("/protected-route").get(authenticate, (req, res) => {
-  // Only authenticated users can access this route
-  res.json({
-    message: "Protected route accessed successfully",
-    user: req.user,
-  });
-});
+app.get("/", (req, res)=> {
+  res.send("welcome")
+})
 
 // localhost
 const PORT = process.env.PORT || 8000;
