@@ -11,6 +11,8 @@ const MsgContainer = () => {
         <div className="h-[290px] relative top-4 overflow-y-scroll">
           <ReceivedMsg /> {/* Receive msg */}
           <SendMsg /> {/* Send msg */}
+          <SendMsg />
+          <ReceivedMsg />
         </div>
         <MsgInput /> {/* Message input */}
       </div>

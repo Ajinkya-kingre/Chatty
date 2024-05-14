@@ -3,7 +3,7 @@ import React from "react";
 const ReceivedMsg = () => {
   return (
     <div>
-      <div className="flex w-60 relative mb-6 left-80 items-start gap-2">
+      <div className="flex w-64 relative mb-6 left-72  items-start gap-2">
         <img
           className="w-6 h-6 rounded-full"
           src="person.jpg"
@@ -21,7 +21,9 @@ const ReceivedMsg = () => {
           <div className="flex flex-col leading-1.5 p-2 border-gray-200 bg-gray-100 rounded-e-xl rounded-es-xl dark:bg-gray-700">
             <p className="text-xs font-normal text-gray-900 dark:text-white">
               That's awesome. I think our users will really appreciate the
-              improvements.
+              improvements. That's awesome. I think our users will really
+              appreciate the improvements. That's awesome. I think our users
+              will really appreciate the improvements.
             </p>
           </div>
           <span className="text-xs font-normal text-gray-500 dark:text-gray-400">

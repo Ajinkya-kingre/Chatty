@@ -30,7 +30,7 @@ const Register = () => {
       if (response.status >= 200 && response.status < 300) {
         const token = response.data.token;
 
-        toast.success("Registration successful");
+        toast.success(response.data.message);
         console.log("Register successful:", response.data);
 
         // Save the user to local storage
@@ -39,7 +39,7 @@ const Register = () => {
         // Redirect to the chat page
         navigate("/login");
       } else {
-        toast.success("Registration failed");
+        toast.success(response.data.message);
         console.log("there is error during registration", response.data);
       }
     } catch (error) {
