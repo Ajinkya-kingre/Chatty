@@ -12,11 +12,11 @@ const {
   getOtherUsers,
 } = require("../../controller/authController");
 const validate = require("../../middleware/authMiddle.js");
-const { isAuthenticate } = require("../../middleware/isAuthenticate.js");
+const isAuthenticated = require("../../middleware/isAuthenticate.js")
 
 router.route("/register").post(validate(registrationSchema), register);
 router.route("/login").post(validate(loginSchema), login);
 router.route("/logout").get(logout);
-router.route("/other_users").get(isAuthenticate, getOtherUsers);
+router.route("/other_users").get(isAuthenticated, getOtherUsers);
 
 module.exports = router;

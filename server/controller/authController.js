@@ -21,13 +21,14 @@ const register = async (req, res) => {
           username,
           email,
           password: hashedPassword,
+         
         });
 
         await newUser.save();
 
         res
           .status(200)
-          .send({ message: "User created successfully!!!", user: newUser });
+          .send({ message: "User created successfully!!!", user: {usertoken}});
       }
     }
   } catch (error) {

@@ -1,35 +1,29 @@
 const jwt = require("jsonwebtoken");
-const userModel = require("../model/user");
+const User = require("../model/user");
 
-const isAuthenticate = async (req, res, next) => {
+const isAuthenticated = async (req, res, next) => {
+  const token = req.header("Authorization");
+  if (!token) {
+    return res.status(401).json({ message: "token is not found" });
+  }
+  const jwtToken = token.replace("Bearer", "").trim();
+  console.log("token from authUSer middleware", jwtToken);
+
+  next();
   try {
-    console.log("Headers:", req.headers);
-    console.log("Body:", req.body);
-    console.log("Query:", req.query);
+    const isVerified = jwt.verify(jwtToken, process.env.JWT_SECRET_KEY);
 
-    // Extract token from headers, body, or query
-    const token =
-      req.cookies?.accessToken ||
-      req.header("Authorization")?.replace("Bearer ", "");
-    console.log("Extracted Token:", token);
+    const userData = await User.findOne({ email: isVerified.email }).select({
+      password: 0,
+    });
+    console.log(userData);
 
-    if (!token) {
-      return res.status(401).json({ message: "User not authenticated." });
-    }
-
-    // Verify the token using the secret key
-    const decodedToken = jwt.verify(token, process.env.JWT_SECRET_KEY);
-    console.log("Decoded Token:", decodedToken);
-
-    // Attach user information to request object for future use
-    req.userId = decodedToken.userId;
-
-    // Proceed to the next middleware
-    next();
+    req.token = token;
+    req.user = userData;
+    req.userID = userData._id;
   } catch (error) {
-    console.error("Authentication error:", error);
-    res.status(401).json({ message: "Unauthorized" });
+    return res.status(401).json({ message: "unAnuthorize token" });
   }
 };
 
-module.exports = { isAuthenticate };
+module.exports = isAuthenticated;
