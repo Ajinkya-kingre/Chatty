@@ -26,10 +26,6 @@ app.use(cors(corsOperation));
 //auth routes
 app.use("/api/auth", routes);
 
-app.get("/", (req, res)=> {
-  res.send("welcome")
-})
-
 // localhost
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {
